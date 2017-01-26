@@ -31,6 +31,6 @@ Configurable variables:
  - JENKINS_EMAIL (Default: `admin@localhost`) - E-mail address
  - JENKINS_URL (Default: `http://192.168.64.100:8080/`) - URL where Jenkins will be accessible. This is necessary because Jenkins cannot reliably detect such URL from within itself.
 
-User `-e` argument to override default values, e.g. to change admin account and pass add `-e JENKINS_USER=John -e JENNS_PASS=123`:
+Use `-e` argument to override default values, e.g. to change admin account and pass add `-e JENKINS_USER=John -e JENNS_PASS=123`:
 
 `fin docker run --name=jenkins_master -d --restart=always -p 8080:8080 -p 50000:50000 --link docksal-socat:socat -v jenkins_home:/var/jenkins_home -v jenkins_logs:/var/log/jenkins -e JENKINS_USER=John -e JENNS_PASS=123 jenkins_master`
