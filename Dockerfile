@@ -4,7 +4,7 @@ FROM jenkins:2.7.4-alpine
 ENV JENKINS_LOGS=/var/log/jenkins
 # Skip initial setup.
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false" \
-    # Set nuumber of threads and log file for Jenkins.
+    # Set number of threads and log file for Jenkins.
     JENKINS_OPTS="--handlerCountStartup=100 --handlerCountMax=300 --logfile=${JENKINS_LOGS}/jenkins.log" \
     # Customizable settings:
     # Default admin user.
