@@ -1,13 +1,14 @@
 FROM jenkins:2.7.4-alpine
-MAINTAINER haixiang
 
-# Get plugins list and install.
-COPY plugins.txt /tmp/
-RUN /usr/local/bin/install-plugins.sh $(cat /tmp/plugins.txt | tr '\n' ' ')
-
-# Customizable settings:
-# Default user.
-ENV JENKINS_USER=admin \
+# Jenkins logs directory.
+ENV JENKINS_LOGS=/var/log/jenkins
+# Skip initial setup.
+ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false" \
+    # Set nuumber of threads and log file for Jenkins.
+    JENKINS_OPTS="--handlerCountStartup=100 --handlerCountMax=300 --logfile=${JENKINS_LOGS}/jenkins.log" \
+    # Customizable settings:
+    # Default admin user.
+    JENKINS_USER=admin \
     JENKINS_PASS=admin \
     # Default email.
     JENKINS_EMAIL=admin@localhost \
@@ -15,18 +16,17 @@ ENV JENKINS_USER=admin \
     # This is necessary because Jenkins cannot reliably detect such a URL from within itself.
     JENKINS_URL=http://192.168.64.100:8080/
 
-# Create log directory.
-USER root
-RUN mkdir -p /var/log/jenkins && \
-    chown -R jenkins:jenkins /var/log/jenkins
-
-USER jenkins
-
+# Get plugins list.
+COPY plugins.txt /tmp/
 # Add initial YADP configuration.
 COPY configs/config.xml ${JENKINS_HOME}/
-
 # Custom JENKINS groovy scripts...
 COPY groovy/*.groovy /usr/share/jenkins/ref/init.groovy.d/
 
-# Skip initial setup.
-ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
+# Create log directory.
+USER root
+RUN mkdir -p ${JENKINS_LOGS} && \
+    chown -R jenkins:jenkins ${JENKINS_LOGS}
+USER jenkins
+# Install plugins from txt file.
+RUN /usr/local/bin/install-plugins.sh $(cat /tmp/plugins.txt | tr '\n' ' ')

@@ -3,15 +3,19 @@
 Jenkins Master image pre-configured to be used with ephemeral slaves 
 
 ### Prerequisites ###
+
 1. Docksal
 2. Docksal-Socat built and running ([docksal/service-socat](https://github.com/docksal/service-socat))
 
 ### Setup ###
 
-1. Create volumes: 
+1. Create volumes:
+ 
     - `fin docker volume create --name jenkins_home`
     - `fin docker volume create --name jenkins_logs`
-2. Build Jenkins: 
+    
+2. Build Jenkins:
+ 
     - `fin docker build -t jenkins_master:latest .`
 
 ### Usage ###
@@ -21,6 +25,7 @@ Run Jenkins:
 `fin docker run --name=jenkins_master -d --restart=always -p 8080:8080 -p 50000:50000 --link docksal-socat:socat -v jenkins_home:/var/jenkins_home -v jenkins_logs:/var/log/jenkins jenkins_master`
 
 Configurable variables:
+
  - JENKINS_USER (Default: `admin`) - superuser username
  - JENKINS_PASS (Default: `admin`) - superuser pass
  - JENKINS_EMAIL (Default: `admin@localhost`) - E-mail address
