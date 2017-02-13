@@ -26,3 +26,8 @@ COPY groovy/*.groovy /usr/share/jenkins/ref/init.groovy.d/
 
 # Install plugins from txt file.
 RUN /usr/local/bin/install-plugins.sh $(cat /tmp/plugins.txt | tr '\n' ' ')
+
+# Exposed ports.
+EXPOSE 50000-50100
+EXPOSE 80
+EXPOSE 8080
