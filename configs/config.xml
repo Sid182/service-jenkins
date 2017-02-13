@@ -51,7 +51,9 @@
               <command></command>
               <hostname></hostname>
               <dnsHosts class="java.util.Collections$UnmodifiableRandomAccessList" resolves-to="java.util.Collections$UnmodifiableList">
-                <c class="list"/>
+                <c class="list">
+                  <string>192.168.64.100</string>
+                </c>
                 <list reference="../c"/>
               </dnsHosts>
               <volumes class="java.util.Collections$UnmodifiableRandomAccessList" resolves-to="java.util.Collections$UnmodifiableList">
